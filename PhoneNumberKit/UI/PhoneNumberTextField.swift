@@ -290,15 +290,8 @@ open class PhoneNumberTextField: UITextField, UITextFieldDelegate {
         guard self.withExamplePlaceholder else { return }
         if isEditing, !(self.text ?? "").isEmpty { return } // No need to update a placeholder while the placeholder isn't showing
 
-        let format: PhoneNumberFormat
-        if self.currentRegion == "RU" {
-            format = self.withPrefix ? PhoneNumberFormat.national : .international
-        } else {
-            format = self.withPrefix ? PhoneNumberFormat.international : .national
-        }
-
+        let format = self.withPrefix ? PhoneNumberFormat.international : .national
         let example = self.phoneNumberKit.getFormattedExampleNumber(forCountry: self.currentRegion, withFormat: format, withPrefix: self.withPrefix) ?? "12345678"
-
         let font = self.font ?? UIFont.preferredFont(forTextStyle: .body)
         let ph = NSMutableAttributedString(string: example, attributes: [.font: font])
         #if compiler(>=5.1)
